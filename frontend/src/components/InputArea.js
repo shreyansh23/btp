@@ -1,8 +1,52 @@
 import React, { useState } from "react";
-import { Segment, Button, Grid, Image, Container } from "semantic-ui-react";
+import {
+  Segment,
+  Button,
+  Grid,
+  Image,
+  Container,
+  Dropdown,
+  Select,
+  Placeholder,
+} from "semantic-ui-react";
 import axios from "axios";
 import { fetchResults, setLoading } from "../redux/result/resultActions";
 import { connect } from "react-redux";
+
+const friendOptions = [
+  {
+    key: "Jenny Hess",
+    text: "Jenny Hess",
+    value: "Jenny Hess",
+    icon: "sun",
+    label: "asdf",
+  },
+  {
+    key: "Elliot Fu",
+    text: "Elliot Fu",
+    value: "Elliot Fu",
+  },
+  {
+    key: "Stevie Feliciano",
+    text: "Stevie Feliciano",
+    value: "Stevie Feliciano",
+  },
+  {
+    key: "Christian",
+    text: "Christian",
+    value: "Christian",
+  },
+  {
+    key: "Matt",
+    text: "Matt",
+    value: "Matt",
+  },
+  {
+    key: "Justen Kitsune",
+    text: "Justen Kitsune",
+    value: "Justen Kitsune",
+  },
+];
 
 const InputArea = (props) => {
   const fileInputRef = React.createRef();
@@ -35,64 +79,102 @@ const InputArea = (props) => {
     });
   };
   return (
-    <div>
-      <Segment>
-        <p>
-          In the past few years, the problem of generating descriptive sentences
-          automatically for images has garnered a rising interest in natural
-          language processing and computer vision research. The generation of
-          captions from images has various practical benefits, ranging from
-          aiding the visually impaired, to enabling the automatic and
-          cost-saving labelling of the millions of images uploaded to the
-          Internet every day. Image captioning is a fundamental task which
-          requires semantic understanding of images and the ability of
-          generating description sentences with proper and correct structure. At
-          present images are annotated with human intervention and it becomes a
-          nearly impossible task for huge commercial databases.
-        </p>
-        <Grid>
-          <Grid.Column width={8}>
-            <Container>
-              <Button
-                content="Upload image"
-                labelPosition="left"
-                size="large"
-                icon="file"
-                onClick={() => fileInputRef.current.click()}
-              />
-              <input
-                ref={fileInputRef}
-                type="file"
-                hidden
-                onChange={onFileChange}
-              />
-              <Button
-                size="large"
-                icon="redo"
-                labelPosition="left"
-                content="Reset"
-                onClick={handleReset}
-              />
-              <Button
-                size="large"
-                icon="setting"
-                labelPosition="left"
-                content="Generate caption"
-                onClick={onGenerateResult}
-                disabled={status != "uploaded"}
-              />
-            </Container>
-          </Grid.Column>
-          <Grid.Column width={8}>
-            {status == "uploaded" ? (
-              <div>
-                <Image src={image} style={{ width: "400px" }} />
-                Uploaded Image
-              </div>
-            ) : null}
-          </Grid.Column>
-        </Grid>
-      </Segment>
+    <div attached className="segment-box">
+      <p>
+        <strong> Caption generation</strong> is a challenging artificial
+        intelligence problem where a textual description must be generated for a
+        given photograph. It requires both methods from computer vision to
+        understand the content of the image and a language model from the field
+        of natural language processing to turn the understanding of the image
+        into words in the right order. Recently, deep learning methods have
+        achieved state-of-the-art results on examples of this problem.
+      </p>
+      <p>
+        <strong> Instructions:</strong> Click on "Upoad Image" button to upload
+        an image and then click on "Generate Caption" button to get the
+        captions.
+      </p>
+
+      <Grid columns={4} style={{ margin: "40px" }}>
+        <Grid.Column
+          width={8}
+          verticalAlign="middle"
+          centered
+          style={{ padding: "5px 140px 5px 140px" }}
+        >
+          <div className="sth-btn">
+            <Button
+              fluid
+              content="Upload image"
+              labelPosition="left"
+              size="medium"
+              icon="file"
+              onClick={() => fileInputRef.current.click()}
+              basic
+              color="blue"
+            />
+            <input
+              ref={fileInputRef}
+              type="file"
+              hidden
+              onChange={onFileChange}
+            />
+          </div>
+          <div className="sth-btn">
+            <Select
+              as={Button}
+              placeholder="Select model"
+              className="ui basic blue button"
+              options={friendOptions}
+              fluid
+              size="medium"
+            />
+          </div>
+          <div className="sth-btn">
+            <Button
+              fluid
+              size="medium"
+              icon="redo"
+              labelPosition="left"
+              content="Reset"
+              onClick={handleReset}
+              basic
+              color="blue"
+            />
+          </div>
+          <div className="sth-btn">
+            <Button
+              animated="fade"
+              fluid
+              size="medium"
+              icon="setting"
+              labelPosition="left"
+              content="Generate caption"
+              onClick={onGenerateResult}
+              disabled={status != "uploaded"}
+              basic
+              color="blue"
+            />
+          </div>
+        </Grid.Column>
+        <Grid.Column width={8}>
+          <div>
+            {/* <Image src={image} style={{ height: "300px" }} /> */}
+            <p style={{ position: "relative", left: "150px" }}></p>
+          </div>
+          {status == "uploaded" ? (
+            <div>
+              <Image src={image} style={{ height: "300px" }} />
+              <p style={{ position: "relative", left: "150px" }}></p>
+            </div>
+          ) : (
+            <Placeholder style={{ height: "220px", textAlign: "center" }}>
+              <Placeholder.Image />
+              <strong>Image Not Uploaded</strong>
+            </Placeholder>
+          )}
+        </Grid.Column>
+      </Grid>
     </div>
   );
 };

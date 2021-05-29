@@ -1,21 +1,52 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { Card, Grid, Header, Icon, Image, Segment } from "semantic-ui-react";
+import {
+  Card,
+  Container,
+  Dimmer,
+  Grid,
+  Header,
+  Icon,
+  Image,
+  Loader,
+  Segment,
+} from "semantic-ui-react";
 import { fetchResults } from "../redux/result/resultActions";
 
 const ResultItem = ({ result }) => {
   return (
-    <Segment>
+    <Container attached basic className="segment-box">
       <Grid>
-        <Grid.Column width={6}>
-          <Image src={result.image} />
+        <Grid.Column width={4}>
+          <Segment basic size="large">
+            <Image src={result.image} />
+          </Segment>
         </Grid.Column>
         <Grid.Column width={10}>
-          <p>Generated caption: {result.caption}</p>
+          <Segment basic size="large">
+            <p>
+              <b>ID:</b> {12}
+            </p>
+            <p>
+              <b>Generated caption:</b> {result.caption}
+            </p>
+            <p>
+              <b>Model used:</b> {"Xception"}
+            </p>
+            <p>
+              <b>Model size:</b> {"6454 X 64546"}
+            </p>
+            <p>
+              <b>Time taken:</b> {"4.0212 seconds"}
+            </p>
+            <p>
+              <b>Generated link:</b> {"4.0212 seconds"}
+            </p>
+          </Segment>
         </Grid.Column>
       </Grid>
-    </Segment>
+    </Container>
   );
 };
 const ResultList = (props) => {
@@ -25,13 +56,19 @@ const ResultList = (props) => {
   const resultList = props.state.results.map((result) => (
     <ResultItem result={result} key={result.id} />
   ));
+  const loading = props.state.loading;
   return (
-    <Segment>
-      <Header textAlign="center">
-        Results {props.state.loading && <span>Loading...</span>}
-      </Header>
-      {resultList}
-    </Segment>
+    <div style={{ margin: "" }}>
+      <Dimmer.Dimmable dimmed={loading}>
+        <Dimmer active={loading} inverted>
+          <Loader></Loader>
+        </Dimmer>
+        <Segment textAlign="center" color="black" inverted size="huge" basic>
+          Results {props.state.loading && <span>loading...</span>}
+        </Segment>
+        {resultList}
+      </Dimmer.Dimmable>
+    </div>
   );
 };
 

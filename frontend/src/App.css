@@ -1,0 +1,10 @@
+* {
+  font-family: "Roboto";
+  font-size: 16;
+}
+.sth-btn {
+  margin: 20px;
+}
+.segment-box {
+  padding: 30px !important;
+}
