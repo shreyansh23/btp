@@ -4,11 +4,13 @@ Backend
 
 - Open a new terminal
 - Create and activate a new virtual environment (optional)
+- Install required packages
+```
   pip install django
   pip install djangorestframework
   pip install Pillow
   pip install django-cors-headers
-
+```
 - Go to backend root folder
 - Run `python manage.py migrate`
 - Run `python manage.py createsuperuser` // Choose username and password
