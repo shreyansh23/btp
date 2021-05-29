@@ -1,7 +1,7 @@
 from result.models import *
 from rest_framework import serializers
 
-from .dl.utils import f
+from dl.utils import f
 
 
 class ResultSerializer(serializers.ModelSerializer):
