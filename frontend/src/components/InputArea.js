@@ -12,6 +12,7 @@ import {
 import axios from "axios";
 import { fetchResults, setLoading } from "../redux/result/resultActions";
 import { connect } from "react-redux";
+import modelInfo from "../constants";
 
 const friendOptions = [
   {
@@ -48,12 +49,25 @@ const friendOptions = [
   },
 ];
 
+const modelOptions = Object.keys(modelInfo).map((key) => {
+  return {
+    key: modelInfo[key].Model,
+    text: modelInfo[key].Model,
+    value: modelInfo[key].Model,
+  };
+});
+
+console.log(modelOptions);
+
 const InputArea = (props) => {
   const fileInputRef = React.createRef();
+  const dropdownref = React.createRef();
   const [status, setStatus] = useState("default");
   const [uploaded, setUploaded] = useState(false);
   const [file, setFile] = useState(null);
   const [image, setImage] = useState(null);
+  const [modelName, setModelName] = useState("");
+
   const onFileChange = (event) => {
     setFile(event.target.files[0]);
     setStatus("uploaded");
@@ -64,9 +78,16 @@ const InputArea = (props) => {
     setUploaded(false);
     setFile(null);
   };
+  const onSelectChange = (e, data) => {
+    const selectedVal = data.value;
+    console.log(selectedVal);
+    setModelName(selectedVal);
+  };
   const onGenerateResult = () => {
     var bodyFormData = new FormData();
     bodyFormData.append("image", file);
+    bodyFormData.append("model_name", modelName);
+
     props.setLoading(true);
     axios({
       method: "post",
@@ -121,13 +142,17 @@ const InputArea = (props) => {
             />
           </div>
           <div className="sth-btn">
-            <Select
+            <Dropdown
+              selection
               as={Button}
               placeholder="Select model"
               className="ui basic blue button"
-              options={friendOptions}
+              options={modelOptions}
               fluid
               size="medium"
+              onChange={onSelectChange}
+              textAlign="middle"
+              // value={modelName}
             />
           </div>
           <div className="sth-btn">

@@ -13,8 +13,15 @@ import {
   Segment,
 } from "semantic-ui-react";
 import { fetchResults } from "../redux/result/resultActions";
+import modelInfo from "../constants";
 
 const ResultItem = ({ result }) => {
+  console.log(result);
+  var modelName = result.model_name;
+  if (!Object.keys(modelInfo).includes(result.model_name)) {
+    modelName = "Xception";
+  }
+  const size = modelInfo[modelName]["Size"];
   return (
     <Container attached basic className="segment-box">
       <Grid>
@@ -26,22 +33,19 @@ const ResultItem = ({ result }) => {
         <Grid.Column width={10}>
           <Segment basic size="large">
             <p>
-              <b>ID:</b> {12}
-            </p>
-            <p>
               <b>Generated caption:</b> {result.caption}
             </p>
             <p>
-              <b>Model used:</b> {"Xception"}
+              <b>Model used:</b> {result.model_name}
             </p>
             <p>
-              <b>Model size:</b> {"6454 X 64546"}
+              <b>Model size:</b> {size}
             </p>
             <p>
               <b>Time taken:</b> {"4.0212 seconds"}
             </p>
             <p>
-              <b>Generated link:</b> {"4.0212 seconds"}
+              <b>Generated link:</b> <a href={result.url}>{result.url}</a>
             </p>
           </Segment>
         </Grid.Column>

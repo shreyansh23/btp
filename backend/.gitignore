@@ -1,3 +1,6 @@
+# Models
+*.h5
+
 # Django #
 *.log
 *.pot
