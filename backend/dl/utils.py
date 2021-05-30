@@ -10,12 +10,16 @@ from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.image import img_to_array
 from keras.preprocessing.sequence import pad_sequences
 from keras.models import Model, load_model
-from keras.applications import *
+from tensorflow.keras.applications import InceptionV3
 
+from keras.applications.inception_v3 import *
+from keras.applications import *
+from keras.applications.vgg16 import *
 from keras.applications.vgg19 import VGG19
 from keras.applications.resnet50 import ResNet50
 from keras.applications.mobilenet import MobileNet
 from keras.applications.resnet import ResNet101
+from keras.applications.xception import Xception
 from keras.applications.densenet import *
 from keras.applications.nasnet import *
 
@@ -24,21 +28,22 @@ filename = "dl/model_2.h5"  # Model filename
 
 # img_filename = "dl/images/vaibhav.jpg"  # image filename
 max_length = 34
-UserModel = None 
-userModel = None 
+UserModel = None
+userModel = None
 size = None
 
 assigner = {
-    'Xception' : [Xception, xception, 299],
-    'InceptionV3' : [InceptionV3, inception_v3, 299],
+    'Xception': [Xception, xception, 299],
+    'InceptionV3': [InceptionV3, inception_v3, 299],
     'ResNet50': [ResNet50, resnet50, 224],
     'MobileNet': [MobileNet, mobilenet, 224],
     'VGG16': [VGG16, vgg16, 224],
     'ResNet101': [ResNet101, resnet, 224],
     'VGG19': [VGG19, vgg19, 224],
-    'DenseNet121' :[DenseNet121, densenet, 224],
-    'NASNetMobile' :[NASNetMobile, nasnet, 224],
+    'DenseNet121': [DenseNet121, densenet, 224],
+    'NASNetMobile': [NASNetMobile, nasnet, 224],
 }
+
 
 def word_for_id(integer, tokenizer):
     if integer in tokenizer.index_word.keys():
@@ -61,6 +66,7 @@ def generate_desc(model, tokenizer, photo, max_length):
             break
     return in_text
 
+
 def extract_features(filename):
     model = UserModel()
     model = Model(inputs=model.inputs, outputs=model.layers[-2].output)
@@ -70,6 +76,7 @@ def extract_features(filename):
     image = userModel.preprocess_input(image)
     feature = model.predict(image, verbose=0)
     return feature
+
 
 def final_prediction(img_filename, model_name="Xception"):
     global UserModel, userModel, size
