@@ -76,9 +76,9 @@ const InputArea = (props) => {
           have achieved state-of-the-art results on examples of this problem.
         </p>
         <p>
-          <strong> Instructions:</strong> Click on "Upoad Image" button to
-          upload an image, select the model, and then click on "Generate
-          Caption" button to get the caption result.
+          <strong> Instructions:</strong> Select the model then, Click on "Upoad
+          Image" button to upload an image, and then click on "Generate Caption"
+          button to get the caption result.
         </p>
       </div>
 
@@ -89,6 +89,20 @@ const InputArea = (props) => {
           centered
           style={{ padding: "5px 140px 5px 140px" }}
         >
+          <div className="sth-btn">
+            <Dropdown
+              button
+              className="icon"
+              options={modelOptions}
+              fluid
+              className="ui basic blue button icon"
+              color="blue"
+              basic
+              onChange={onSelectChange}
+              text={modelName}
+              style={{ textAlign: "center" }}
+            />
+          </div>
           <div className="sth-btn">
             <Button
               fluid
@@ -107,33 +121,7 @@ const InputArea = (props) => {
               onChange={onFileChange}
             />
           </div>
-          <div className="sth-btn">
-            <Dropdown
-              button
-              className="icon"
-              options={modelOptions}
-              fluid
-              className="ui basic blue button icon"
-              color="blue"
-              basic
-              onChange={onSelectChange}
-              text={modelName}
-              style={{ textAlign: "center" }}
-            />
-            {/* <Dropdown
-              selection
-              button
-              placeholder="Select model"
-              // className="ui basic blue button"
-              options={modelOptions}
-              fluid
-              size="medium"
-              onChange={onSelectChange}
-              // textAlign="center"
-              // value={modelName}
-              // style={{ textAlign: "center" }}
-            /> */}
-          </div>
+
           <div className="sth-btn">
             <Button
               fluid
