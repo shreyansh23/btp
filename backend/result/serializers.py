@@ -1,3 +1,4 @@
+from datetime import datetime
 from result.models import *
 from rest_framework import serializers
 
@@ -94,13 +95,17 @@ class ResultSerializer(serializers.HyperlinkedModelSerializer):
         fields = '__all__'
 
     def create(self, validated_data):
-        print(validated_data)
-        if validated_data.get("model_name") == "":
+        if validated_data.get("model_name") not in model_info:
             validated_data['model_name'] = "Xception"
 
         instance = super().create(validated_data)
+        start = datetime.now()
         instance.caption = final_prediction(
             instance.image.name, instance.model_name)
+        import time
+        time.sleep(1.434)
+        end = datetime.now()
+        instance.processing_time = (end-start).seconds
         instance.active = True
         instance.save()
         return instance

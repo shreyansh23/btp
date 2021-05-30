@@ -36,7 +36,6 @@ export const fetchResults = () => {
         dispatch(fetchResultsSuccess(response.data));
       })
       .catch((error) => {
-        console.log(error);
         dispatch(fetchResultsFailure(error.message));
       });
   };

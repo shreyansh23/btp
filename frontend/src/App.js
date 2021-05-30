@@ -12,7 +12,7 @@ function App() {
     <Provider store={store}>
       <div className="App">
         <Container fluid>
-          <MyHeader />
+          <MyHeader title="Automated Image Captioning using Deep Learning" />
           <InputArea />
           <ResultList />
         </Container>

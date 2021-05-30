@@ -12,11 +12,11 @@ import {
   Loader,
   Segment,
 } from "semantic-ui-react";
+import { MyHeader } from "./Header";
 import { fetchResults } from "../redux/result/resultActions";
 import modelInfo from "../constants";
 
 const ResultItem = ({ result }) => {
-  console.log(result);
   var modelName = result.model_name;
   if (!Object.keys(modelInfo).includes(result.model_name)) {
     modelName = "Xception";
@@ -25,7 +25,7 @@ const ResultItem = ({ result }) => {
   return (
     <Container attached basic className="segment-box">
       <Grid>
-        <Grid.Column width={4}>
+        <Grid.Column width={5}>
           <Segment basic size="large">
             <Image src={result.image} />
           </Segment>
@@ -42,7 +42,7 @@ const ResultItem = ({ result }) => {
               <b>Model size:</b> {size}
             </p>
             <p>
-              <b>Time taken:</b> {"4.0212 seconds"}
+              <b>Time taken:</b> {result.processing_time} seconds
             </p>
             <p>
               <b>Generated link:</b> <a href={result.url}>{result.url}</a>
@@ -61,15 +61,16 @@ const ResultList = (props) => {
     <ResultItem result={result} key={result.id} />
   ));
   const loading = props.state.loading;
+  const title = (
+    <span>Results {props.state.loading && <span>loading...</span>}</span>
+  );
   return (
     <div style={{ margin: "" }}>
       <Dimmer.Dimmable dimmed={loading}>
         <Dimmer active={loading} inverted>
           <Loader></Loader>
         </Dimmer>
-        <Segment textAlign="center" color="black" inverted size="huge" basic>
-          Results {props.state.loading && <span>loading...</span>}
-        </Segment>
+        <MyHeader title={title} />
         {resultList}
       </Dimmer.Dimmable>
     </div>
