@@ -10,6 +10,8 @@ Backend
   pip install djangorestframework
   pip install Pillow
   pip install django-cors-headers
+  pip install keras
+  pip install tensorflow
 ```
 - Go to backend root folder
 - Run `python manage.py migrate`
